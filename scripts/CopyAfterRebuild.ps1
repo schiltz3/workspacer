@@ -2,10 +2,20 @@
 if($workspacer){
     $workspacer | Stop-Process
     Sleep 1 
-    if(!$firefox.HasExited){
+    if(!$workspacer.HasExited){
     $workspacer | Stop-Process -Force
     }
 }
+
+$workspacerwatcher = Get-Process -Name workspacer.Watcher -ErrorAction SilentlyContinue
+if($workspacerwatcher){
+    $workspacerwatcher | Stop-Process
+    Sleep 1 
+    if(!$workspacerwatcher.HasExited){
+    $workspacerwatcher | Stop-Process -Force
+    }
+}
+Remove-Variable workspacerwatcher
 Remove-Variable workspacer
 
 Copy-Item -Path 'D:\git\workspacer\src\workspacer\bin\Release\net5.0-windows\win10-x64\*' -Destination 'C:\Program Files\workspacer' -Recurse -Force
