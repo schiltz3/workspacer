@@ -14,6 +14,8 @@ namespace workspacer.Bar.Widgets
         public Color WorkspaceEmptyColor { get; set; } = Color.Gray;
         public Color WorkspaceIndicatingBackColor { get; set; } = Color.Teal;
         public int BlinkPeriod { get; set; } = 1000;
+        public string LeftPadding { get; set; } = "[";
+        public string RightPadding { get; set; } = "]";
 
         private Timer _blinkTimer;
         private ConcurrentDictionary<IWorkspace, bool> _blinkingWorkspaces;
@@ -85,7 +87,7 @@ namespace workspacer.Bar.Widgets
             var monitor = Context.WorkspaceContainer.GetCurrentMonitorForWorkspace(workspace);
             var visible = Context.Monitor == monitor;
 
-            return visible ? $"[{workspace.Name}]" : $" {workspace.Name} ";
+            return visible ? LeftPadding + workspace.Name + RightPadding : $" {workspace.Name} ";
         }
 
         protected virtual Color GetDisplayColor(IWorkspace workspace, int index)
